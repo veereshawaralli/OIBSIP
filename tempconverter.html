@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature Converter</title>
+  <style>
+    /* Background Gradient */
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+    }
+
+    /* Glassmorphism Card */
+    .converter {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      text-align: center;
+      color: white;
+      width: 350px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .converter h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* Input, Dropdown, Button */
+    input, select, button {
+      margin: 12px 0;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    input, select {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    input::placeholder {
+      color: #ddd;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff8c00, #ff3c00);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Result */
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      border-radius: 12px;
+      animation: popIn 0.5s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes popIn {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+  </style>
+</head>
+<body>
+  <div class="converter">
+    <h2>🌡 Temperature Converter</h2>
+    
+    <input type="number" id="tempInput" placeholder="Enter temperature">
+    
+    <select id="unit">
+      <option value="C">Celsius</option>
+      <option value="F">Fahrenheit</option>
+      <option value="K">Kelvin</option>
+    </select>
+    
+    <button onclick="convertTemp()">Convert</button>
+    
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function convertTemp() {
+      let temp = parseFloat(document.getElementById("tempInput").value);
+      let unit = document.getElementById("unit").value;
+      let result = document.getElementById("result");
+
+      if (isNaN(temp)) {
+        result.innerHTML = "⚠️ Please enter a valid number!";
+        return;
+      }
+
+      let c, f, k;
+
+      if (unit === "C") {
+        c = temp;
+        f = (c * 9/5) + 32;
+        k = c + 273.15;
+      } else if (unit === "F") {
+        f = temp;
+        c = (f - 32) * 5/9;
+        k = c + 273.15;
+      } else if (unit === "K") {
+        k = temp;
+        c = k - 273.15;
+        f = (c * 9/5) + 32;
+      }
+
+      result.innerHTML = `
+        🌍 Converted Values:<br>
+        <span style="color:#ffea00;">Celsius: ${c.toFixed(2)} °C</span><br>
+        <span style="color:#ff9800;">Fahrenheit: ${f.toFixed(2)} °F</span><br>
+        <span style="color:#00e676;">Kelvin: ${k.toFixed(2)} K</span>
+      `;
+    }
+  </script>
+</body>
+</html>
